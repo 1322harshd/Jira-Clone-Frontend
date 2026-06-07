@@ -1,6 +1,8 @@
 import logo from '../assets/logos/logo.png'; 
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Profile(){
 const [form, setForm] = useState({
@@ -16,7 +18,7 @@ const handleChange = (e) =>{
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axios.get('https://localhost:3002/login',form);
+        const response = await axios.post('/api/login', form);
         console.log(response);
     }
     catch(error){
@@ -41,6 +43,8 @@ const handleSubmit = async (e) => {
                         Login
                     </button>
             </form>
+            <p>Don't have an account?</p>
+            <button >Sign Up</button>
         </section>
 
         </>
