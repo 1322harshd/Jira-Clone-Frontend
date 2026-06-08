@@ -1,7 +1,6 @@
 import logo from '../assets/logos/logo.png'; 
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Profile(){

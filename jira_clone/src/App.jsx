@@ -4,8 +4,10 @@ import SignUp from "./pages/signup.jsx";
 function App() {
   return (
     <Router>
-     <Route path="/signup" element={<SignUp />}/>
-     <Route path="/" element={<Profile />}/>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Profile />} />
+      </Routes>
     </Router>
   )
 }
