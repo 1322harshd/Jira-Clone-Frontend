@@ -1,0 +1,14 @@
+.authentication-option{
+    display:flex;
+}
+
+.authentication-option button{
+    all:unset;
+    color:blue;
+}
+
+.authentication-option button:hover{
+    color:red;
+    cursor: pointer;
+}
+

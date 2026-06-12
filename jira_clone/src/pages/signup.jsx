@@ -1,8 +1,14 @@
 import logo from '../assets/logos/logo.png'; 
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './authentication.css';
+
 
 export default function SignUp(){
+
+    const navigate = useNavigate();
+
 const [form, setForm] = useState({
     name:'',
     email:'',
@@ -51,6 +57,12 @@ const handleSubmit = async (e) => {
                         SignUp
                     </button>
             </form>
+
+            <section className='authentication-option'>
+            <p>Already have an account?</p>
+            <button onClick={() => navigate('/login')}>Login</button>
+            </section>
+           
         </section>
 
         </>
