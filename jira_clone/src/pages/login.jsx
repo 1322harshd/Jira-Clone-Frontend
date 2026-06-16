@@ -35,12 +35,15 @@ const handleSubmit = async (e) => {
         </section>
         <section className='login-inputs'>
             <form onSubmit={handleSubmit}>
-
+                <div className='input-wrapper'>
                 <label htmlFor="email">Email:</label>
                 <input id="email" name="email" type="email" value={form.email} onChange={handleChange}></input>
+                </div>
 
+                <div className='input-wrapper'>
                 <label htmlFor="password">Password:</label>
                 <input id="password" name="password" type="password" value={form.password} onChange={handleChange}></input>
+                </div>
                 
                 <button type="submit" className="btn" >
                         Login

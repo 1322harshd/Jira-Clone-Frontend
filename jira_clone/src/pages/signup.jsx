@@ -16,6 +16,7 @@ const [form, setForm] = useState({
     confirmPassword:''
 })
 
+const [error, setError] = useState(null);
 
 const handleChange = (e) =>{
     setForm({...form,[e.target.name]:e.target.value});
@@ -28,7 +29,7 @@ const handleSubmit = async (e) => {
         console.log(response);
     }
     catch(error){
-        console.log(error);
+        setError(error.response.data.message);
     }
 }
     return(
@@ -39,19 +40,27 @@ const handleSubmit = async (e) => {
         <section className='login-inputs'>
             <form onSubmit={handleSubmit}>
 
+                <div className='input-wrapper'>
                 <label htmlFor="name">Name:</label>
                 <input id="name" name="name" type="text" value={form.name} onChange={handleChange}></input>
+                </div>
 
+                <div className='input-wrapper'>
                 <label htmlFor="email">Email:</label>
                 <input id="email" name="email" type="email" value={form.email} onChange={handleChange}></input>
+                </div>
 
+                <div className='input-wrapper'>
                 <label htmlFor="password">Password:</label>
                 <input id="password" name="password" type="password" value={form.password} onChange={handleChange}></input>
+                </div>
 
+                <div className='input-wrapper'>
                 <label htmlFor="confirm-password">Confirm Password:</label>
                 <input id="confirm-password" name="confirm-password" type="password" value={form.confirmPassword} onChange={handleChange}></input>
+                </div>
 
-
+                {error && <p className='error'>{error}</p>}
                 
                 <button type="submit" className="btn" >
                         SignUp
@@ -62,7 +71,7 @@ const handleSubmit = async (e) => {
             <p>Already have an account?</p>
             <button onClick={() => navigate('/login')}>Login</button>
             </section>
-           
+     
         </section>
 
         </>

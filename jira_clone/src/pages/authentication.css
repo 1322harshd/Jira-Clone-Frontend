@@ -12,3 +12,32 @@
     cursor: pointer;
 }
 
+.error{
+    color:red;
+    display:inline;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    align-items: flex-start;
+    margin:0 auto;
+    width:50%;
+}
+form input{
+    width:50%;
+}
+
+.input-wrapper{
+    display:flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.input-wrapper label{
+    width:140px;
+    text-align:left;
+}
+
+.input-wrapper input{
+    width:300px;
+}
