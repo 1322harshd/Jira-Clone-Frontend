@@ -37,6 +37,8 @@ const handleSubmit = async (e) => {
         <section className='header'>    
         <img src={logo} alt="website-logo" width="200px" height="100px" />
         </section>
+
+        <h1 className='page-heading'>SignUp</h1>
         <section className='login-inputs'>
             <form onSubmit={handleSubmit}>
 

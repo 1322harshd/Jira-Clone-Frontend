@@ -13,6 +13,7 @@ const [form, setForm] = useState({
     password:''
 })
 
+const [error, setError] = useState(null);
 
 const handleChange = (e) =>{
     setForm({...form,[e.target.name]:e.target.value});
@@ -25,14 +26,17 @@ const handleSubmit = async (e) => {
         console.log(response);
     }
     catch(error){
-        console.log(error);
+        setError(error.response.data.message);
     }
 }
     return(
         <>
         <section className='header'>    
-        <img src={logo} alt="website-logo" width="200px" height="100px" />
+        <img src={logo} alt="website-logo" width="200px" height="100px" padding-left="20px" />
         </section>
+
+        <h1 className='page-heading'>Login</h1>
+
         <section className='login-inputs'>
             <form onSubmit={handleSubmit}>
                 <div className='input-wrapper'>
@@ -44,7 +48,9 @@ const handleSubmit = async (e) => {
                 <label htmlFor="password">Password:</label>
                 <input id="password" name="password" type="password" value={form.password} onChange={handleChange}></input>
                 </div>
-                
+
+{error && <p className='error'>{error}</p>}
+
                 <button type="submit" className="btn" >
                         Login
                     </button>
