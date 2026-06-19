@@ -24,6 +24,7 @@ const handleSubmit = async (e) => {
     try{
         const response = await axios.post('/api/login', form);
         console.log(response);
+        navigate('/dashboard');
     }
     catch(error){
         setError(error.response.data.message);
