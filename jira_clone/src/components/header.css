@@ -1,4 +1,50 @@
 .header{
     display:flex;
+    width:100%;
+    align-items: end;
+    
+}
 
+.main-icon{
+    margin-left: auto;
+}
+
+.user-image{
+    width:4vw;
+    height:4vw;
+    border-radius:50%;
+    margin: 2vh 2vw 0 auto;
+    
+}
+
+.search-logo{
+    z-index: 1;
+    position:absolute;
+    top:10px;
+    left:10px;
+}
+
+.search-input{
+    margin-left:auto;
+    position:relative;
+}
+.search-input input{
+    padding:0 35px;
+    box-sizing: border-box;
+
+    border-radius:10px;
+    width:12vw;
+    height:2vw;
+    background-color: #E0E3E5;
+    text-align: center;
+    border-style: none;
+    transition: 0.3s ease;
+}
+
+.search-input input:focus::placeholder{
+    color:transparent;
+}
+
+.search-input input:hover{
+    width:14vw;
 }
