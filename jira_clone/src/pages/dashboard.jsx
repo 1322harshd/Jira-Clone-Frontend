@@ -32,7 +32,6 @@ useEffect(() => {
 return(
     <>
     <Header />
-    <h1>hello from dashboard</h1>
     </>
 )
 }
