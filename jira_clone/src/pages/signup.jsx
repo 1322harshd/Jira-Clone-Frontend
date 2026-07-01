@@ -27,6 +27,7 @@ const handleSubmit = async (e) => {
     try{
         const response = await axios.post('/api/users', form);
         console.log(response);
+        navigate("/avatar");
     }
     catch(error){
         setError(error.response.data.message);
