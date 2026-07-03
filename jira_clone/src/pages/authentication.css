@@ -49,7 +49,7 @@ form input{
     border:none;
 }
 
-button{
+.auth-btn{
     margin:0 auto;
     font-family: inherit;
     font-weight:500;
@@ -66,4 +66,70 @@ button{
 .page-heading{
     text-align:center;
     color:#6366F1;
+}
+
+.avatars{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width:50%;
+    margin: 50px auto;
+    gap:20px;
+    justify-items: center;
+}
+.avatars img{
+    transition: transform 0.3s ease;
+}
+
+.avatars img:hover{
+    transform: scale(1.1);
+}
+
+.avatars button{
+    all:unset;
+}
+
+.avatar-heading{
+   text-align: center;
+}
+
+.upload-input{
+    display:none;
+}
+.upload-btn {
+  display: block;
+  background-color: #6366F1;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+width:125px;
+text-align: center;
+margin:0 auto;
+}
+.uploaded-avatar{
+ display:flex;
+   justify-content: center;
+   align-items: center;
+   height:100vh;
+   flex-direction: column;
+  
+}
+.uploaded-avatar img{
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px; 
+  
+}
+
+.avatar-submit{
+    all:unset;
+     background-color: #6366F1;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+width:100px;
+text-align: center;
 }

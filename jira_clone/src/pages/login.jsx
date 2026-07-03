@@ -52,7 +52,7 @@ const handleSubmit = async (e) => {
 
 {error && <p className='error'>{error}</p>}
 
-                <button type="submit" className="btn" >
+                <button type="submit" className="auth-btn" >
                         Login
                     </button>
             </form>

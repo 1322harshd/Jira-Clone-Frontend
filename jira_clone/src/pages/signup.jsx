@@ -72,7 +72,7 @@ const handleSubmit = async (e) => {
 
             <section className='authentication-option'>
             <p>Already have an account?</p>
-            <button onClick={() => navigate('/login')}>Login</button>
+            <button className='auth-btn' onClick={() => navigate('/login')}>Login</button>
             </section>
      
         </section>
