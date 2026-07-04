@@ -1,16 +1,19 @@
-import image from '../assets/images/images.jpeg'
 import {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-export default function UserIcon(){
+export default function UserIcon({user}){
     const navigate = useNavigate();
 
 const [open, setOpen] = useState(false);
 
+const imageLink = `http://localhost:3002/${user.image}`;
+
 const handleClick =  async (event) => {
 event.preventDefault();
+
+
 
 try{
      const response = await axios.post('/api/logout', {
@@ -27,14 +30,14 @@ try{
 return (
     <>
     <div className="main-icon">
-        <img src={image} alt="user-image" className='user-image' onClick={ () => setOpen(!open)}></img>
+        <img src={imageLink} alt="user-image" className='user-image' onClick={ () => setOpen(!open)}></img>
     </div>
 
     <div className={open ? 'user-settings show' : 'user-settings'}>
 
         <div className='user-img-name'>
-        <img src={image} alt="user-image" className='user-image' ></img>
-        <h3>Karam Dehati</h3>
+        <img src={imageLink} alt="user-image" className='user-image' ></img>
+        <h3>{user.name}</h3>
         </div>
 
         <hr></hr>

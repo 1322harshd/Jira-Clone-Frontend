@@ -31,7 +31,8 @@ useEffect(() => {
 
 return(
     <>
-    <Header />
+    <Header user={data} />
+    
     </>
 )
 }

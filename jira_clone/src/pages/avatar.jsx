@@ -11,10 +11,13 @@ const avatars = Object.entries(images).map(([path, mod]) => ({
 }));
 
 import {useState} from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function Avatar() {
+       const navigate = useNavigate();
 
 const [selectedAvatar, setSelectedAvatar] = useState(null);
 const [uploadedAvatar,setUploadedAvatar] = useState(null);
@@ -44,8 +47,31 @@ const handleUploadAvatar = (event) => {
 
 };
 
-const handleAvatarSubmission = () => {
-    alert("hello");
+const handleAvatarSubmission = async () => {
+
+const formData = new FormData();
+
+if (uploadedAvatar){
+    formData.append('image', uploadedAvatar.file);
+}else if(selectedAvatar){
+    formData.append('avatarOption',selectedAvatar.filename);
+}else{
+    alert("Please fill out at least one field.")
+    return;
+}
+    try{
+        const response = await axios.post('/api/displayimage',formData,{
+            withCredentials:true,
+            headers: {
+                'Content-Type' : 'multipar/form-data'
+            }
+        }); 
+        
+        navigate("/login");
+    }
+    catch(error){
+        setError(error.response.data.message)
+    }
 }
 
   return (

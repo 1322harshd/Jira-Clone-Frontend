@@ -5,7 +5,7 @@ import { useState } from 'react';
 import './header.css'
 
 
-export default function Header(){
+export default function Header({user}){
     return(
         <>
        <section className='header'>
@@ -16,7 +16,7 @@ export default function Header(){
        <input type="text" placeholder='Search' name="search" ></input>
        </div>
 
-        <div className='user-menu'><UserIcon /></div>
+        <div className='user-menu'><UserIcon user={user} /></div>
       
        </section>
         </>
