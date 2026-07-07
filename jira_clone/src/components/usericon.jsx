@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 export default function UserIcon({user}){
-    const navigate = useNavigate();
+const navigate = useNavigate();
 
 const [open, setOpen] = useState(false);
 

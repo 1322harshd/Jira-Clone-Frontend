@@ -1,0 +1,15 @@
+.create-new-btn{
+    all:unset;
+    cursor:pointer;
+    background-color:#6366F1 ;
+    color:white;
+    padding:10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.plus-sign{
+    font-size: larger;
+    padding:0;
+    margin: 0;
+    font-weight: bolder;
+}
