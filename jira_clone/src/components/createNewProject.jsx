@@ -1,16 +1,15 @@
 import "../styles/components/createNewProject.css";
 import { useState } from "react";
 
-export default function CreateNewProject(){
+export default function CreateNewProject({onBack}){
 
-const [buttonPressed,setButtonPressed] = useState(false);
 
-if(buttonPressed === true){
-    alert('button pressed');
-}
+
     return(
         <>
-        <button className="create-new-btn" onClick={ () => setButtonPressed(true)}><span className="plus-sign">+</span> Create New Project</button>
+        <button onClick={onBack}>Back</button>
+       <h1>Create new project here</h1>
+       
         </>
     )
 }
