@@ -3,3 +3,21 @@
      width: fit-content;
     margin: 40px auto;
 }
+.create-new-btn{
+    all:unset;
+    cursor:pointer;
+    background-color:#6366F1 ;
+    color:white;
+    padding:10px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition:0.3s ease;
+}
+
+.create-new-btn:hover{
+    transform: scale(1.2);
+}
+
+.form-group{
+    display:flex;
+}

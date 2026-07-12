@@ -1,4 +1,12 @@
-.create-new-btn{
+
+.plus-sign{
+    font-size: larger;
+    padding:0;
+    margin: 0;
+    font-weight: bolder;
+}
+
+.back-btn button{
     all:unset;
     cursor:pointer;
     background-color:#6366F1 ;
@@ -6,10 +14,11 @@
     padding:10px;
     border-radius: 10px;
     font-weight: bold;
+    transition: 0.3s ease;
+
 }
-.plus-sign{
-    font-size: larger;
-    padding:0;
-    margin: 0;
-    font-weight: bolder;
+
+.back-btn button:hover{
+    transform: scale(1.2);
 }
+
