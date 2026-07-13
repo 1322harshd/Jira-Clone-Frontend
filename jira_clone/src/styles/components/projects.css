@@ -17,7 +17,3 @@
 .create-new-btn:hover{
     transform: scale(1.2);
 }
-
-.form-group{
-    display:flex;
-}
