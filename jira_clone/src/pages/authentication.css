@@ -19,7 +19,7 @@
     display:inline;
 }
 
-form{
+.login-inputs form{
     display:flex;
     flex-direction:column;
     width:50%;
@@ -27,7 +27,7 @@ form{
     margin:0 auto;
 }
 
-form input{
+.login-inputs form input{
     width:50%;
 }
 

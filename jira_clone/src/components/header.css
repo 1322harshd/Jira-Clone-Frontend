@@ -1,4 +1,4 @@
-.header{
+.app-header{
     display:flex;
     width:100%;
     align-items: end;
@@ -94,7 +94,7 @@ opacity: 0;
     font-weight:bold;
 }
 
-.show{
+.user-settings.show{
    opacity: 1;
   transform: translateY(0);
   visibility: visible;

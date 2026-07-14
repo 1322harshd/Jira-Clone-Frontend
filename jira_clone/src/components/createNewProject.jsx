@@ -15,6 +15,9 @@ export default function CreateNewProject({onBack}){
 
     const [selectedMember, setSelectedMember] = useState([])
 
+
+    const getUserImageLink = (imagePath) => `http://localhost:3002/${imagePath}`;
+
     const handleChange = (e) => {
         setFormData({...formData,[e.target.name]:e.target.value});
     }
@@ -48,9 +51,19 @@ export default function CreateNewProject({onBack}){
 
     }, [searchText]);
 
-    const handleAddedMember = (user) => {
-       setSelectedMember((prevMembers) => [...prevMembers,user]);
+   const handleAddedMember = (user) => {
+  setSelectedMember((prevMembers) => {
+    const alreadySelected = prevMembers.some(
+      (member) => member.name === user.name
+    );
+
+    if (alreadySelected) {
+      return prevMembers;
     }
+
+    return [...prevMembers, user];
+  });
+};
 
     const handleRemoveMember = (userToRemove) => {
        setSelectedMember((prevMembers) => prevMembers.filter((member) => member.name !== userToRemove.name))
@@ -79,25 +92,26 @@ export default function CreateNewProject({onBack}){
 
             <div className="form-group">
             <label htmlFor="description">Description</label>
-            <input id="description" name="description" type="textarea" value={formData.description} onChange={ handleChange} ></input>
+            <textarea id="description" name="description" type="textarea" value={formData.description} onChange={ handleChange} ></textarea>
             </div>
 
             { selectedMember.length > 0 && <div className="selected-members">
                 {selectedMember.map( (user) => (
                     <p key={user.id}>
-                       {user.name}
-                        <span>
+                       <img src={getUserImageLink(user.image)} alt={`${user.name} avatar`} />
+                       <span>{user.name}</span>
+                        <sup>
                             <button type="button" onClick={() => handleRemoveMember(user)}>
-                            X
+                            x
                             </button>
-                        </span>
+                        </sup>
 
                     </p>
                 ))}
                 </div>
             }
 
-            <div className="form-group">
+            <div className={`form-group ${searchText ? "no-margin": ""}`}>
             <label htmlFor="add-member">Member</label>
             <input id="add-member" name="add-member" type="text" value={searchText} onChange={ (e) => { setSearchText(e.target.value)}}></input>
             </div>
@@ -105,17 +119,16 @@ export default function CreateNewProject({onBack}){
             </div>
 
             { searchData.length > 0 && <div className="search-response">
-                <ul>
+                <div className="search-response-list">
                 {searchData.map( (user) => (
 
-                   <li key={user.name}>
-                    <button type="button" onClick={() => handleAddedMember(user)}>
-                        {user.name}
+                    <button key={user.name} type="button" onClick={() => handleAddedMember(user)}>
+                        <img src={getUserImageLink(user.image)} alt={`${user.name} avatar`} />
+                        <span>{user.name}</span>
                     </button>
-                    </li>
 
                 ))}
-                </ul>
+                </div>
             </div>}
 
             <button className="create-btn" type="submit">Create</button>

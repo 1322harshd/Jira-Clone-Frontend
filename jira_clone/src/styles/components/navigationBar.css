@@ -5,7 +5,7 @@
     width:70%;
 }
 
-ul{
+.navigation-bar ul{
     list-style: none;
     background-color: #E0E3E5;
     width:100%;
@@ -15,18 +15,18 @@ ul{
     border-radius: 5%;
 }
 
-ul li{
+.navigation-bar ul li{
     padding: 30px 0 0 60px;
     margin-top: 10px;
 }
 
-ul li button{
+.navigation-bar ul li button{
     all:unset;
     transition: 0.3s ease;
     color:#6366F1;
     font-size:larger;
 }
 
-ul li button:hover{
+.navigation-bar ul li button:hover{
     font-weight: bolder;
 }

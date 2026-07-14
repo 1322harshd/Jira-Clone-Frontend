@@ -8,7 +8,7 @@ import './header.css'
 export default function Header({user}){
     return(
         <>
-       <section className='header'>
+       <section className='app-header'>
        <img src={logo} alt="website-logo" width="190px" height="50px" padding-left="20px" />
        
        <div className='search-input'>

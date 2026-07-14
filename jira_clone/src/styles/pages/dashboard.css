@@ -1,16 +1,16 @@
-.footer-dashboard{
+.dashboard-layout .footer-dashboard{
   grid-area:footer;
 }
 
-.header-dashboard{
+.dashboard-layout .header-dashboard{
     grid-area: header;
 }
 
-.main{
+.dashboard-layout .main{
     grid-area: main;
 }
 
-.sidebar{
+.dashboard-layout .sidebar{
     grid-area: sidebar;
 }
 
