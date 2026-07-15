@@ -24,7 +24,23 @@ export default function CreateNewProject({onBack}){
 
     const  handleSubmit = async (e) => {
         e.preventDefault();
-         
+
+        const memberIds = selectedMember.map((member) => member.id);
+
+        const projectData = {
+            name: formData.projectname,
+            description: formData.description,
+            members: memberIds,
+        };
+      
+        try{
+            const response = await api.post('/create-project', projectData ,{
+                withCredentials:true
+            });
+            console.log(response.data);
+        }catch(err){
+            console.log(err);
+        }
     }
 
     useEffect( () => {
