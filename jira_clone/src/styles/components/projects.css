@@ -17,3 +17,40 @@
 .create-new-btn:hover{
     transform: scale(1.2);
 }
+
+.project-display{
+display:grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap:2vw;
+margin:2vh 2vw;
+}
+
+.project{
+    background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border-radius: 2vh;
+  text-align: left;
+  padding-left:1vw;
+}
+
+.member-details-images img{
+    height:20px;
+    width:20px;
+    object-fit:cover;
+    border-radius:50%;
+     box-shadow: rgba(15, 23, 42, 0.08); ;
+}
+
+.member-details{
+    display:flex;
+    
+}
+
+.member-details-names span{
+    margin-bottom:20px;
+    padding-left:5px;
+    display: inline-block;
+   
+}
