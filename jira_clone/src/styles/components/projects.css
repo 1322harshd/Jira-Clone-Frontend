@@ -33,6 +33,7 @@ margin:2vh 2vw;
   border-radius: 2vh;
   text-align: left;
   padding-left:1vw;
+  transition: 0.3s ease;
 }
 
 .member-details-images img{
@@ -53,4 +54,7 @@ margin:2vh 2vw;
     padding-left:5px;
     display: inline-block;
    
+}
+.project:hover{
+ transform:scale(1.1);
 }

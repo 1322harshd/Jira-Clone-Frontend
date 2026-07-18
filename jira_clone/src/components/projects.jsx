@@ -52,15 +52,25 @@ export default function Projects(){
             </div>
 
        <div className="project-display">
+    {/* using map to show all projects */}
   {projects.map((project) => {
     const visibleMembers = project.members?.slice(0, 3) || [];
     const extraMembers = (project.members?.length || 0) - visibleMembers.length;
-
+    let noTasks = false;
+    if(project.tasks == [] ){
+       noTasks = true;
+    }
     return (
       <div className="project" key={project.id}>
         <h2>{project.name}</h2>
 
+        <div className="project-details">
+        { !noTasks && <h5>No Tasks</h5>}
+        
+        </div>
+
         <div className="member-details">
+            {/* using map method to show all the members images */}
           <div className="member-details-images">
             {visibleMembers.map((member) => {
               const user = member.user;
@@ -78,6 +88,7 @@ export default function Projects(){
           </div>
 
           <div className="member-details-names">
+             {/* using map method to show all the members names */}
             {visibleMembers.map((member, index) => {
               const user = member.user;
 
@@ -103,9 +114,6 @@ export default function Projects(){
     );
   })}
 </div>
-
-
-
             </>
         )}
 
