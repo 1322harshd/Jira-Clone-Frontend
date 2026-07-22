@@ -22,35 +22,11 @@ const [error, setError] = useState(null);
 const [openedComponent,setOpenedComponent] = useState("dashboard");
 
 
-
-useEffect(() => {
-    const fetchData = async () => {
-        try{
-            setLoading(true);
-
-            const response = await api.get('/dashboard', {
-                withCredentials:true
-            });
-
-            setData(response.data);
-            console.log('Dashboard response:',response)
-        }catch(err){
-            setError(err.message || 'Something went wrong');
-        }finally {
-            setLoading(false);
-        }
-    };
-
-    fetchData();
-},[]);
-
-
-
 return(
     <>
     <div className="dashboard-layout">
     <div className='header-dashboard'>
-    <Header user={data} />
+    <Header />
     </div>
 
     <div className='sidebar'>

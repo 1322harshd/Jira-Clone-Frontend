@@ -3,10 +3,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './authentication.css';
+import {useAuth} from "../context/AuthContext.jsx";
 
 export default function Profile(){
 
 const navigate = useNavigate();
+const { setCurrentUser } = useAuth();
+
 
 const [form, setForm] = useState({
     email:'',
@@ -23,7 +26,7 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     try{
         const response = await axios.post('/api/login', form);
-        console.log(response);
+        setCurrentUser(response.data.user);
         navigate('/dashboard');
     }
     catch(error){

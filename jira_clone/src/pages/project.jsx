@@ -1,14 +1,103 @@
 import "../styles/pages/project.css";
-
+import Header from "../components/header";
+import NavigationBar from "../components/navigationBar";
+import {useEffect,useState} from "react";
+import {useParams} from "react-router-dom";
+import api from "../api/axiosInstance";
+import { motion, AnimatePresence } from "framer-motion";
+import Footer from "../components/footer";
 
 export default function Project(){
+    const {projectId} = useParams();
+    const [responseData, setResponseData] = useState([]);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
+    useEffect( () => {
+        const abortController = new AbortController();
+
+        const fetchProject = async () => {
+            try{
+                const response = await api.get(`/project/${projectId}`,{
+                    withCredentials: true,
+                    signal: abortController.signal,
+                });
+
+                setResponseData(response.data)
+
+            }catch(err){
+                if(err.code === 'ERR_CANCELED') return;
+                console.log(err);
+            }
+            }
+
+            fetchProject();
+
+            return () => {
+                        abortController.abort();
+                    };
+
+    },[projectId]);
 
 
 
     return(
     <>
+    <div className="project-page-layout">
+    <div className="header-project">
+        <Header />
+    </div>
+    
+<div className="sidebar-project">
+    <AnimatePresence mode="wait">
+    {sidebarOpen ? (
+        <motion.div 
+        key="project-navigation"
+        className="navigation-bar-project"
+        initial={{x: -220,opacity:0}}
+        animate={{x:0,opacity:1}}
+        exit={{x: -220, opacity:0}}
+        transition={{duration: 0.25}}
+        >
+            <NavigationBar onStateChange={() => {}} />
+            <button
+            className="project-nav-chevron project-nav-chevron-close"
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close navigation"
+            >
+                <span></span>
+            </button>
+        </motion.div>
+    ):(
+        <motion.button 
+        key="project-nav-arrow"
+        className="project-nav-chevron project-nav-chevron-open"
+        type="button"
+        initial={{x:-50, opacity:0}}
+        animate={{x:0, opacity:1}}
+        exit={{x:-50,opacity:0}}
+        transition={{duration:0.25}}
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open navigation"
+        >
+            <span></span>
+        </motion.button>
+    )}
+    </AnimatePresence>
 
+    </div>
+
+    
+    <div className="main-project">
+       <h1>{responseData.name}</h1> 
+    </div>
+     
+
+     <div className="footer-project">
+        <Footer />
+     </div>
+
+    </div>
     </>
     )
 }
