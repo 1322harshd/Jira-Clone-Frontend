@@ -1,16 +1,17 @@
 import "../styles/components/navigationBar.css";
+import { NavLink } from "react-router-dom";
 
-export default function NavigationBar({onStateChange}){
+export default function NavigationBar(){
     return(
         <>
         
 <div className='navigation-bar'>
   <ul>
    
-    <li><button onClick={() => onStateChange("dashboard")}>Dashboard</button></li>
-    <li><button onClick={() => onStateChange("projects")}>Projects</button></li>
-    <li><button onClick={() => onStateChange("tasks")}>Tasks</button></li>
-    <li><button onClick={() => onStateChange("settings")}>Settings</button></li>
+    <li><NavLink to="/dashboard" end>Dashboard</NavLink></li>
+    <li><NavLink to="/dashboard/projects">Projects</NavLink></li>
+    <li><NavLink to="/dashboard/tasks">Tasks</NavLink></li>
+    <li><NavLink to="/dashboard/settings">Settings</NavLink></li>
 
   </ul>
   </div>

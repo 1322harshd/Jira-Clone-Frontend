@@ -20,13 +20,15 @@
     margin-top: 10px;
 }
 
-.navigation-bar ul li button{
+.navigation-bar ul li a{
     all:unset;
     transition: 0.3s ease;
     color:#FFFFFF;
     font-size:larger;
+    cursor:pointer;
 }
 
-.navigation-bar ul li button:hover{
+.navigation-bar ul li a:hover,
+.navigation-bar ul li a.active{
     font-weight: bolder;
 }

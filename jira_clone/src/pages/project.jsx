@@ -6,11 +6,13 @@ import {useParams} from "react-router-dom";
 import api from "../api/axiosInstance";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../components/footer";
+import { useNavigate } from "react-router-dom";
 
 export default function Project(){
     const {projectId} = useParams();
     const [responseData, setResponseData] = useState([]);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect( () => {
         const abortController = new AbortController();
@@ -42,7 +44,7 @@ export default function Project(){
 
     return(
     <>
-    <div className="project-page-layout">
+    <div className={`project-page-layout ${sidebarOpen ? "nav-open" : "nav-closed"}`}>
     <div className="header-project">
         <Header />
     </div>
@@ -53,12 +55,12 @@ export default function Project(){
         <motion.div 
         key="project-navigation"
         className="navigation-bar-project"
-        initial={{x: -220,opacity:0}}
-        animate={{x:0,opacity:1}}
-        exit={{x: -220, opacity:0}}
-        transition={{duration: 0.25}}
+        initial={{x: -220}}
+        animate={{x:0}}
+        exit={{x: -220}}
+        transition={{duration: 0.5, ease:"easeOut"}}
         >
-            <NavigationBar onStateChange={() => {}} />
+            <NavigationBar />
             <button
             className="project-nav-chevron project-nav-chevron-close"
             type="button"
@@ -89,6 +91,8 @@ export default function Project(){
 
     
     <div className="main-project">
+        <button className="project-back-button" onClick={() => navigate("/dashboard/projects")}>Back to Projects</button>
+
        <h1>{responseData.name}</h1> 
     </div>
      

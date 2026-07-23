@@ -1,6 +1,7 @@
 import CreateNewProject from "./createNewProject";
 import "../styles/components/projects.css";
 import {useEffect,useState} from 'react';
+import { Link } from "react-router-dom";
 import api from '../api/axiosInstance';
 
 export default function Projects(){
@@ -54,18 +55,22 @@ export default function Projects(){
        <div className="project-display">
     {/* using map to show all projects */}
   {projects.map((project) => {
+  
     const visibleMembers = project.members?.slice(0, 3) || [];
     const extraMembers = (project.members?.length || 0) - visibleMembers.length;
-    let noTasks = false;
-    if(project.tasks == [] ){
-       noTasks = true;
-    }
+    const noTasks = (project.tasks?.length || 0) === 0;
+
     return (
-      <div className="project" key={project.id}>
+      <Link
+      to={`/project/${project.id}`}
+      className="project-card-link"
+      key={project.id}
+      >
+      <div className="project">
         <h2>{project.name}</h2>
 
         <div className="project-details">
-        { !noTasks && <h5>No Tasks</h5>}
+        { noTasks && <h5>No Tasks</h5>}
         
         </div>
 
@@ -111,6 +116,7 @@ export default function Projects(){
           </div>
         </div>
       </div>
+      </Link>
     );
   })}
 </div>
