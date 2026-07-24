@@ -1,8 +1,10 @@
 import "../styles/components/createNewProject.css";
 import { useState,useEffect } from "react";
 import api from '../api/axiosInstance';
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNewProject({onBack}){
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         projectname: '',
@@ -38,6 +40,8 @@ export default function CreateNewProject({onBack}){
                 withCredentials:true
             });
             console.log(response.data);
+            navigate(`/project/${response.data.projectId}`)
+
         }catch(err){
             console.log(err);
         }

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Project(){
     const {projectId} = useParams();
-    const [responseData, setResponseData] = useState([]);
+    const [responseData, setResponseData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -93,7 +93,21 @@ export default function Project(){
     <div className="main-project">
         <button className="project-back-button" onClick={() => navigate("/dashboard/projects")}>Back to Projects</button>
 
-       <h1>{responseData.name}</h1> 
+       <h1>{responseData?.name}</h1> 
+
+
+        <div className="team-members-project">
+            {responseData?.members?.map((member) => {
+                if(!member.user) return null;
+
+                return(
+                <img src={}
+                <p key={member.user.id}>{member.user.name}</p>
+
+                );
+            })}
+        </div>
+
     </div>
      
 

@@ -92,3 +92,9 @@
   padding:10px;
   border-radius:10px;
 }
+
+.team-members-project{
+    width:20%;
+    float: right;
+    text-align: center;
+}
