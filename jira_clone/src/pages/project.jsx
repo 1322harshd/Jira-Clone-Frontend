@@ -12,6 +12,7 @@ export default function Project(){
     const {projectId} = useParams();
     const [responseData, setResponseData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [addMemberPressed,setAddMemberPressed] = useState(false);
     const navigate = useNavigate();
 
     useEffect( () => {
@@ -39,7 +40,6 @@ export default function Project(){
                     };
 
     },[projectId]);
-
 
 
     return(
@@ -94,22 +94,32 @@ export default function Project(){
         <button className="project-back-button" onClick={() => navigate("/dashboard/projects")}>Back to Projects</button>
 
        <h1>{responseData?.name}</h1> 
+       
 
+       <div className="members-project">
+ 
+        {/* button to add new member to project */}
+       <div className="add-member-button-project">
+        <button onClick={() => setAddMemberPressed(true)}>+ Add Member</button>
+       </div>
 
-        <div className="team-members-project">
+       {/* map method to show all project members */}
             {responseData?.members?.map((member) => {
                 if(!member.user) return null;
 
                 return(
-                <img src={}
-                <p key={member.user.id}>{member.user.name}</p>
-
+                <>   
+                <div className="member-list-project"> 
+                    <img src={`http://localhost:3002/${member.user.image}`} key={member.user.id}></img>
+                    <p key={member.user.id}>{member.user.name}</p>
+                </div>
+                </>
                 );
             })}
         </div>
 
     </div>
-     
+    
 
      <div className="footer-project">
         <Footer />

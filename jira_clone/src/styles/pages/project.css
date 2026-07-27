@@ -93,8 +93,21 @@
   border-radius:10px;
 }
 
-.team-members-project{
-    width:20%;
+
+.members-project{
+       width:20%;
     float: right;
     text-align: center;
+}
+
+
+.member-list-project{
+    display: flex;
+    align-items: center;
+}
+.member-list-project img{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    object-fit: cover;
 }
