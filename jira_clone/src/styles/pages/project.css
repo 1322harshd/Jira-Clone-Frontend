@@ -101,13 +101,36 @@
 }
 
 
-.member-list-project{
+.member-detail-project{
     display: flex;
     align-items: center;
+    
 }
-.member-list-project img{
+.add-member-button-project button{
+    all:unset;
+    background-color: #6366F1;
+    color:#fff;
+    padding:10px;
+    border-radius:10px;
+    transition: all 0.3s ease;
+
+}
+
+.add-member-button-project button:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.member-detail-project img{
     width:30px;
     height:30px;
     border-radius:50%;
     object-fit: cover;
+}
+
+.additional-add-member button{
+    border-radius: 50%;
+    line-height: 1;
+    padding:5px 8px;
+
 }

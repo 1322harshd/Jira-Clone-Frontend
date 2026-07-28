@@ -97,11 +97,15 @@ export default function Project(){
        
 
        <div className="members-project">
- 
+
+        {!addMemberPressed && <div className="member-list-project">
+
         {/* button to add new member to project */}
        <div className="add-member-button-project">
         <button onClick={() => setAddMemberPressed(true)}>+ Add Member</button>
        </div>
+
+       
 
        {/* map method to show all project members */}
             {responseData?.members?.map((member) => {
@@ -109,13 +113,24 @@ export default function Project(){
 
                 return(
                 <>   
-                <div className="member-list-project"> 
+                 <div className="member-detail-project">
                     <img src={`http://localhost:3002/${member.user.image}`} key={member.user.id}></img>
                     <p key={member.user.id}>{member.user.name}</p>
                 </div>
+               
                 </>
                 );
             })}
+            </div>
+            }
+        {addMemberPressed && 
+        <div className="add-member-button-project additional-add-member">
+        <button onClick={ () => setAddMemberPressed(false)}>x</button>
+        <input></input>
+        
+        </div>
+        }
+
         </div>
 
     </div>
