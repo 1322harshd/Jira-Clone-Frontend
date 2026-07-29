@@ -13,6 +13,8 @@ export default function Project(){
     const [responseData, setResponseData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [addMemberPressed,setAddMemberPressed] = useState(false);
+    const [addMemberSearch,setAddMemberSearch] = useState("");
+
     const navigate = useNavigate();
 
     useEffect( () => {
@@ -40,7 +42,15 @@ export default function Project(){
                     };
 
     },[projectId]);
+    
+    {/*  handling state change of add member search */}
+    const handleAddMemberSearch = (e) => {
+            setAddMemberSearch(e.target.value);
 
+            try{
+                const result = api.get(`/projects/${projectId}/member-search/`)
+            }
+    }
 
     return(
     <>
@@ -126,7 +136,7 @@ export default function Project(){
         {addMemberPressed && 
         <div className="add-member-button-project additional-add-member">
         <button onClick={ () => setAddMemberPressed(false)}>x</button>
-        <input></input>
+        <input type="text" value={addMemberSearch} onChange={handleAddMemberSearch}></input>
         
         </div>
         }
