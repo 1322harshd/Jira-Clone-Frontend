@@ -1,9 +1,9 @@
 import logo from '../assets/logos/logo.png'; 
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './authentication.css';
 import {useAuth} from "../context/AuthContext.jsx";
+import api from '../api/axiosInstance.js';
 
 export default function Profile(){
 
@@ -25,12 +25,12 @@ const handleChange = (e) =>{
 const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axios.post('/api/login', form);
+        const response = await api.post('/login', form);
         setCurrentUser(response.data.user);
         navigate('/dashboard');
     }
     catch(error){
-        setError(error.response.data.message);
+        setError(error.response?.data?.message || "Login failed");
     }
 }
     return(

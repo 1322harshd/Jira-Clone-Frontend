@@ -1,73 +1,32 @@
-import "../styles/pages/project.css";
-import Header from "../components/header";
-import NavigationBar from "../components/navigationBar";
-import {useEffect,useState} from "react";
-import {useParams} from "react-router-dom";
-import api from "../api/axiosInstance";
-import { motion, AnimatePresence } from "framer-motion";
-import Footer from "../components/footer";
-import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import api from "../../api/axiosInstance";
 
-export default function Project(){
-    const {projectId} = useParams();
-    const [responseData, setResponseData] = useState(null);
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+export default function AddMemberDrawer({projectId, members, membersOpen, setMembersOpen, onMembersChange}){
     const [addMemberPressed,setAddMemberPressed] = useState(false);
     const [addMemberSearch,setAddMemberSearch] = useState("");
     const [memberSearchData, setMemberSearchData] = useState([]);
     const [selectedMembers, setSelectedMembers] = useState([]);
     const [isAddingMember, setIsAddingMember] = useState(false);
-    const [membersOpen, setMembersOpen] = useState(true);
-
-    const navigate = useNavigate();
 
     const getUserImageLink = (imagePath) => `http://localhost:3002/${imagePath}`;
 
-    useEffect( () => {
-        const abortController = new AbortController();
-
-        const fetchProject = async () => {
-            try{
-                const response = await api.get(`/project/${projectId}`,{
-                    withCredentials: true,
-                    signal: abortController.signal,
-                });
-
-                setResponseData(response.data)
-
-            }catch(err){
-                if(err.code === 'ERR_CANCELED') return;
-                console.log(err);
-            }
-            }
-
-            fetchProject();
-
-            return () => {
-                        abortController.abort();
-                    };
-
-    },[projectId]);
-    
-    
-     //api call for member search
-        useEffect(() => {
+    useEffect(() => {
         if (!addMemberSearch) {
-            setMemberSearchData([]);
             return;
         }
 
         const timer = setTimeout(() => {
             const fetchSearch = async () => {
-            try {
-                const response = await api.get(`/projects/${projectId}/member-search?q=${addMemberSearch}`, {
-                withCredentials: true,
-                });
+                try {
+                    const response = await api.get(`/projects/${projectId}/member-search?q=${addMemberSearch}`, {
+                    withCredentials: true,
+                    });
 
-                setMemberSearchData(response.data);
-            } catch (err) {
-                console.log(err);
-            }
+                    setMemberSearchData(response.data);
+                } catch (err) {
+                    console.log(err);
+                }
             };
 
             fetchSearch();
@@ -76,14 +35,14 @@ export default function Project(){
         return () => {
             clearTimeout(timer);
         };
-        }, [addMemberSearch, projectId]);
+    }, [addMemberSearch, projectId]);
 
     const resetAddMemberForm = () => {
         setAddMemberPressed(false);
         setAddMemberSearch("");
         setMemberSearchData([]);
         setSelectedMembers([]);
-    }
+    };
 
     const handleSelectMember = (user) => {
         setSelectedMembers((prevMembers) => {
@@ -95,11 +54,11 @@ export default function Project(){
         });
         setAddMemberSearch("");
         setMemberSearchData([]);
-    }
+    };
 
     const handleRemoveSelectedMember = (userToRemove) => {
         setSelectedMembers((prevMembers) => prevMembers.filter((member) => member.id !== userToRemove.id));
-    }
+    };
 
     const handleAddMember = async () => {
         if(selectedMembers.length === 0 || isAddingMember) return;
@@ -115,23 +74,13 @@ export default function Project(){
                 withCredentials: true,
             });
 
-            setResponseData((prevData) => {
-                if(!prevData) return prevData;
-
-                const newMembers = selectedMembers.filter((selectedMember) => {
-                    return !prevData.members?.some((member) => member.user?.id === selectedMember.id);
-                });
-
-                if(newMembers.length === 0) return prevData;
-
-                return {
-                    ...prevData,
-                    members: [
-                        ...(prevData.members || []),
-                        ...newMembers.map((member) => ({ user: member })),
-                    ],
-                };
+            const newMembers = selectedMembers.filter((selectedMember) => {
+                return !members.some((member) => member.id === selectedMember.id);
             });
+
+            if(newMembers.length > 0){
+                onMembersChange([...members, ...newMembers]);
+            }
 
             resetAddMemberForm();
         }catch(err){
@@ -139,64 +88,10 @@ export default function Project(){
         }finally{
             setIsAddingMember(false);
         }
-    }
-        
+    };
 
     return(
-    <>
-    <div className={`project-page-layout ${sidebarOpen ? "nav-open" : "nav-closed"}`}>
-    <div className="header-project">
-        <Header />
-    </div>
-    
-<div className="sidebar-project">
-    <AnimatePresence mode="wait">
-    {sidebarOpen ? (
-        <motion.div 
-        key="project-navigation"
-        className="navigation-bar-project"
-        initial={{x: -220}}
-        animate={{x:0}}
-        exit={{x: -220}}
-        transition={{duration: 0.5, ease:"easeOut"}}
-        >
-            <NavigationBar />
-            <button
-            className="project-nav-chevron project-nav-chevron-close"
-            type="button"
-            onClick={() => setSidebarOpen(false)}
-            aria-label="Close navigation"
-            >
-                <span></span>
-            </button>
-        </motion.div>
-    ):(
-        <motion.button 
-        key="project-nav-arrow"
-        className="project-nav-chevron project-nav-chevron-open"
-        type="button"
-        initial={{x:-50, opacity:0}}
-        animate={{x:0, opacity:1}}
-        exit={{x:-50,opacity:0}}
-        transition={{duration:0.25}}
-        onClick={() => setSidebarOpen(true)}
-        aria-label="Open navigation"
-        >
-            <span></span>
-        </motion.button>
-    )}
-    </AnimatePresence>
-
-    </div>
-
-    
-    <div className="main-project">
-        <button className="project-back-button" onClick={() => navigate("/dashboard/projects")}>Back to Projects</button>
-
-       <h1>{responseData?.name}</h1> 
-       
-
-       <AnimatePresence>
+        <AnimatePresence>
         {membersOpen ? (
         <motion.aside
         key="project-members-panel"
@@ -221,7 +116,7 @@ export default function Project(){
                 <span>Team</span>
                 <h2>Members</h2>
             </div>
-            <strong>{responseData?.members?.length || 0}</strong>
+            <strong>{members.length}</strong>
         </div>
 
         {!addMemberPressed && (
@@ -242,13 +137,21 @@ export default function Project(){
         </button>
         <div className="project-member-search-field">
         <div className="project-member-search-input-wrap">
-        <input type="text" placeholder="Search members" value={addMemberSearch} onChange={(e) => setAddMemberSearch(e.target.value)}></input>
+        <input
+        type="text"
+        placeholder="Search members"
+        value={addMemberSearch}
+        onChange={(e) => {
+            setAddMemberSearch(e.target.value);
+            if(!e.target.value) setMemberSearchData([]);
+        }}
+        ></input>
 
         {memberSearchData.length > 0 && (
             <div className="project-member-search-results">
                 {memberSearchData.filter((user) => {
                     const alreadySelected = selectedMembers.some((member) => member.id === user.id);
-                    const alreadyProjectMember = responseData?.members?.some((member) => member.user?.id === user.id);
+                    const alreadyProjectMember = members.some((member) => member.id === user.id);
 
                     return !alreadySelected && !alreadyProjectMember;
                 }).map((user) => (
@@ -286,19 +189,15 @@ export default function Project(){
         }
 
         <div className="member-list-project">
-            {responseData?.members?.map((member) => {
-                if(!member.user) return null;
-
-                return(
-                 <div className="member-detail-project" key={member.user.id}>
-                    <img src={`http://localhost:3002/${member.user.image}`} alt={`${member.user.name} avatar`}></img>
+            {members.map((member) => (
+                <div className="member-detail-project" key={member.id}>
+                    <img src={getUserImageLink(member.image)} alt={`${member.name} avatar`}></img>
                     <div>
-                        <p>{member.user.name}</p>
+                        <p>{member.name}</p>
                         <span>Project member</span>
                     </div>
                 </div>
-                );
-            })}
+            ))}
         </div>
         </div>
         </motion.aside>
@@ -318,15 +217,5 @@ export default function Project(){
         </motion.button>
         )}
        </AnimatePresence>
-
-    </div>
-    
-
-     <div className="footer-project">
-        <Footer />
-     </div>
-
-    </div>
-    </>
-    )
+    );
 }

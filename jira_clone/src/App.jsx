@@ -3,7 +3,7 @@ import Profile from './pages/login.jsx';
 import SignUp from "./pages/signup.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 import Avatar from "./pages/avatar.jsx";
-import Project from "./pages/project.jsx";
+import Project from "./pages/project/Project.jsx";
 import DashboardTab from "./components/dashboardTab.jsx";
 import Projects from "./components/projects.jsx";
 import Tasks from "./components/tasks.jsx";
