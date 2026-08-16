@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from "../context/AuthContext.jsx";
+import api from '../api/axiosInstance.js';
 
 
 export default function UserIcon(){
@@ -16,16 +16,11 @@ if(authLoading || !currentUser){
 
 const imageLink = `http://localhost:3002/${currentUser.image}`;
 
-const handleClick =  async (event) => {
-event.preventDefault();
-
-
-
+const handleClick =  async () => {
 try{
-     const response = await axios.post('/api/logout', {
-                withCredentials:true
-            });
+     await api.post('/logout');
      setCurrentUser(null);
+     setOpen(false);
      navigate('/login');
 
 }catch(error){
@@ -49,7 +44,7 @@ return (
         <hr></hr>
 
         <div className='user-settings-btn'>
-        <a href='/logout' onClick={handleClick}>Logout</a>
+        <button type="button" onClick={handleClick}>Logout</button>
         </div>
 
     </div>

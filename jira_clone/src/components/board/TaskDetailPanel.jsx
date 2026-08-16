@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import api from "../../api/axiosInstance";
 
 const formatDateInput = (dateValue) => {
@@ -12,7 +12,7 @@ const getTaskFromResponse = (responseData) => {
     return responseData?.task || responseData?.updatedTask || responseData;
 };
 
-export default function TaskDetailPanel({task, members, onClose, onTaskUpdated, onTaskDeleted}){
+export default function TaskDetailPanel({task, members, currentUser, onClose, onTaskUpdated, onTaskDeleted}){
     const startingForm = useMemo(() => {
         const assignee = task.assignee || task.user || task.assignedTo;
 
@@ -31,6 +31,41 @@ export default function TaskDetailPanel({task, members, onClose, onTaskUpdated, 
     const [isDeleting, setIsDeleting] = useState(false);
     const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
     const [error, setError] = useState("");
+    const [comments, setComments] = useState([]);
+    const [commentText, setCommentText] = useState("");
+    const [commentError, setCommentError] = useState("");
+    const [isLoadingComments, setIsLoadingComments] = useState(true);
+    const [isPostingComment, setIsPostingComment] = useState(false);
+    const [deletingCommentId, setDeletingCommentId] = useState(null);
+
+    useEffect(() => {
+        const abortController = new AbortController();
+
+        const fetchComments = async () => {
+            try{
+                setIsLoadingComments(true);
+                setCommentError("");
+
+                const response = await api.get(`/getcomments/${task.id}`, {
+                    withCredentials: true,
+                    signal: abortController.signal,
+                });
+
+                setComments(response.data || []);
+            }catch(err){
+                if(err.code === "ERR_CANCELED") return;
+                setCommentError(err.response?.data?.message || "Could not load comments");
+            }finally{
+                setIsLoadingComments(false);
+            }
+        };
+
+        fetchComments();
+
+        return () => {
+            abortController.abort();
+        };
+    }, [task.id]);
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -91,6 +126,56 @@ export default function TaskDetailPanel({task, members, onClose, onTaskUpdated, 
             setError(err.response?.data?.message || "Could not delete task");
         }finally{
             setIsDeleting(false);
+        }
+    };
+
+    const handlePostComment = async (e) => {
+        e.preventDefault();
+
+        const trimmedComment = commentText.trim();
+
+        if(!trimmedComment) return;
+
+        try{
+            setIsPostingComment(true);
+            setCommentError("");
+
+            const response = await api.post(`/comment/${task.id}`, {
+                content: trimmedComment,
+            }, {
+                withCredentials: true,
+            });
+
+            const newComment = response.data.comment || {
+                id: response.data.id || `${task.id}-${Date.now()}`,
+                content: trimmedComment,
+                userId: currentUser?.id,
+                createdAt: new Date().toISOString(),
+            };
+
+            setComments((prevComments) => [...prevComments, newComment]);
+            setCommentText("");
+        }catch(err){
+            setCommentError(err.response?.data?.message || "Could not add comment");
+        }finally{
+            setIsPostingComment(false);
+        }
+    };
+
+    const handleDeleteComment = async (commentId) => {
+        try{
+            setDeletingCommentId(commentId);
+            setCommentError("");
+
+            await api.delete(`/deletecomment/${commentId}`, {
+                withCredentials: true,
+            });
+
+            setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+        }catch(err){
+            setCommentError(err.response?.data?.message || "Could not delete comment");
+        }finally{
+            setDeletingCommentId(null);
         }
     };
 
@@ -166,6 +251,48 @@ export default function TaskDetailPanel({task, members, onClose, onTaskUpdated, 
                     </button>
                 </div>
             </form>
+
+            <section className="task-comments">
+                <div className="task-comments-header">
+                    <h3>Comments</h3>
+                    <span>{comments.length}</span>
+                </div>
+
+                <form className="task-comment-form" onSubmit={handlePostComment}>
+                    <textarea
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Add a comment"
+                    ></textarea>
+                    <button type="submit" disabled={isPostingComment || !commentText.trim()}>
+                        {isPostingComment ? "Posting" : "Post"}
+                    </button>
+                </form>
+
+                {commentError && <p className="task-comment-error">{commentError}</p>}
+
+                <div className="task-comment-list">
+                    {isLoadingComments && <p className="task-comment-empty">Loading comments...</p>}
+
+                    {!isLoadingComments && comments.length === 0 && (
+                        <p className="task-comment-empty">No comments yet.</p>
+                    )}
+
+                    {!isLoadingComments && comments.map((comment) => (
+                        <article className="task-comment" key={comment.id}>
+                            <p>{comment.content}</p>
+                            <div>
+                                <span>{comment.createdAt ? new Date(comment.createdAt).toLocaleString() : "Just now"}</span>
+                                {String(comment.userId) === String(currentUser?.id) && (
+                                    <button type="button" onClick={() => handleDeleteComment(comment.id)} disabled={deletingCommentId === comment.id}>
+                                        {deletingCommentId === comment.id ? "Deleting" : "Delete"}
+                                    </button>
+                                )}
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </section>
         </motion.aside>
 
         {deleteConfirmOpen && (

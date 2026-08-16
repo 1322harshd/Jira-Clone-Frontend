@@ -29,7 +29,7 @@ const sortTasks = (tasks) => {
     });
 };
 
-export default function Board({projectId, tasks, members, onTasksChange}){
+export default function Board({projectId, tasks, members, currentUser, onTasksChange}){
     const [activeTask, setActiveTask] = useState(null);
     const [selectedTask, setSelectedTask] = useState(null);
     const [createTaskOpen, setCreateTaskOpen] = useState(false);
@@ -136,6 +136,7 @@ export default function Board({projectId, tasks, members, onTasksChange}){
             {selectedTask && (
                 <TaskDetailPanel
                 members={members}
+                currentUser={currentUser}
                 task={selectedTask}
                 onClose={() => setSelectedTask(null)}
                 onTaskUpdated={handleTaskUpdated}

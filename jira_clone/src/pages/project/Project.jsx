@@ -112,6 +112,7 @@ export default function Project(){
         projectId={projectId}
         tasks={tasks}
         members={boardMembers}
+        currentUser={currentUser}
         onTasksChange={setTasks}
         />
 
