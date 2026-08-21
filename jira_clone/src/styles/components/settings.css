@@ -1,0 +1,127 @@
+.settings-page{
+    box-sizing:border-box;
+    width:100%;
+    max-width:640px;
+    padding:28px 34px 42px;
+}
+
+.settings-page-header{
+    margin-bottom:22px;
+}
+
+.settings-page-header span{
+    display:block;
+    color:#6366F1;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.settings-page-header h1{
+    margin:3px 0 0;
+    color:#111827;
+    font-size:34px;
+}
+
+.settings-panel{
+    box-sizing:border-box;
+    padding:20px;
+    margin-bottom:16px;
+    background-color:#fff;
+    border:1px solid #E5E7EB;
+    border-radius:10px;
+    box-shadow:0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.settings-panel-header{
+    margin-bottom:16px;
+}
+
+.settings-panel-header h2{
+    margin:0;
+    color:#111827;
+    font-size:20px;
+}
+
+.settings-panel-header p{
+    margin:4px 0 0;
+    color:#64748B;
+    font-size:13px;
+}
+
+.settings-form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.settings-field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.settings-field label{
+    color:#374151;
+    font-size:13px;
+    font-weight:700;
+}
+
+.settings-field input{
+    box-sizing:border-box;
+    width:100%;
+    padding:10px 12px;
+    background-color:#F8FAFC;
+    border:1px solid #E5E7EB;
+    border-radius:8px;
+    color:#111827;
+    font-size:14px;
+}
+
+.settings-field input:focus{
+    outline:none;
+    border-color:#6366F1;
+    background-color:#fff;
+}
+
+.settings-btn{
+    align-self:flex-start;
+    padding:10px 20px;
+    background-color:#4F46E5;
+    border:none;
+    border-radius:8px;
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.settings-btn:hover{
+    background-color:#4338CA;
+}
+
+.settings-btn:disabled{
+    background-color:#A5A6F6;
+    cursor:not-allowed;
+}
+
+.settings-message{
+    margin:0;
+    font-size:13px;
+}
+
+.settings-message-error{
+    color:#B91C1C;
+    font-weight:700;
+}
+
+.settings-message-success{
+    color:#15803D;
+    font-weight:700;
+}
+
+@media (max-width: 640px){
+    .settings-page{
+        padding:22px 18px 34px;
+    }
+}

@@ -11,9 +11,12 @@ api.interceptors.response.use(
         const originalRequest = error.config;
 
         if(
+            originalRequest &&
             error.response?.status === 401 && 
             !originalRequest._retry &&
-            !originalRequest.url.includes('/refresh')
+            !originalRequest.skipAuthRefresh &&
+            !originalRequest.url.includes('/refresh') &&
+            !originalRequest.url.includes('/login')
         ){
             originalRequest._retry = true;
 
@@ -21,7 +24,9 @@ api.interceptors.response.use(
                 await api.post('/refresh');
                 return api(originalRequest);
             } catch (refreshError) {
-                window.location.href = '/login';
+                if(window.location.pathname !== '/login'){
+                    window.location.href = '/login';
+                }
                 return Promise.reject(refreshError);
             }
         }

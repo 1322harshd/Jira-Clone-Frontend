@@ -13,9 +13,10 @@ export function AuthProvider({children}){
             try{
                 const response = await api.get("/dashboard",{
                     withCredentials:true,
+                    skipAuthRefresh:true,
                 });
 
-                setCurrentUser(response.data);
+                setCurrentUser(response.data.user);
             }catch(err){
                 setCurrentUser(null);
             }

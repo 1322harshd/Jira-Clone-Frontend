@@ -14,7 +14,8 @@ if(authLoading || !currentUser){
     return null;
 }
 
-const imageLink = `http://localhost:3002/${currentUser.image}`;
+const userName = currentUser.name || "Account";
+const imageLink = currentUser.image ? `http://localhost:3002/${currentUser.image}` : null;
 
 const handleClick =  async () => {
 try{
@@ -31,14 +32,24 @@ try{
 return (
     <>
     <div className="main-icon">
+        {imageLink ? (
         <img src={imageLink} alt="user-image" className='user-image' onClick={ () => setOpen(!open)}></img>
+        ) : (
+        <button type="button" className="user-image user-image-fallback" onClick={() => setOpen(!open)}>
+            {userName.charAt(0)}
+        </button>
+        )}
     </div>
 
     <div className={open ? 'user-settings show' : 'user-settings'}>
 
         <div className='user-img-name'>
+        {imageLink ? (
         <img src={imageLink} alt="user-image" className='user-image' ></img>
-        <h3>{currentUser.name}</h3>
+        ) : (
+        <span className="user-image user-image-fallback">{userName.charAt(0)}</span>
+        )}
+        <h3>{userName}</h3>
         </div>
 
         <hr></hr>
