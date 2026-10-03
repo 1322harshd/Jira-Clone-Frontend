@@ -71,7 +71,8 @@ if (uploadedAvatar){
         navigate("/login");
     }
     catch(error){
-        setError(error.response.data.message)
+                setError(error.response?.data?.message || "Could not save avatar");
+
     }
 }
 
@@ -122,6 +123,7 @@ if (uploadedAvatar){
 
 
 
+  {error && <p className='error'>{error}</p>}
 
     </>
      );
