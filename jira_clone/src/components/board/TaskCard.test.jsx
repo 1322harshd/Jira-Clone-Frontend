@@ -1,3 +1,4 @@
+import { test, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'   // tools to draw a component and look at it
 import { DndContext } from '@dnd-kit/core'                // drag-and-drop wrapper (explained below)
 import TaskCard from './TaskCard'                           // the component being tested

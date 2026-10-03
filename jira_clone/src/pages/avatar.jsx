@@ -21,6 +21,7 @@ export default function Avatar() {
 
 const [selectedAvatar, setSelectedAvatar] = useState(null);
 const [uploadedAvatar,setUploadedAvatar] = useState(null);
+const [error, setError] = useState(null);
 
 const handleSelectAvatar = (avatar) => {
   setSelectedAvatar({
@@ -60,7 +61,7 @@ if (uploadedAvatar){
     return;
 }
     try{
-        const response = await axios.post('/api/displayimage',formData,{
+        await axios.post('/api/displayimage',formData,{
             withCredentials:true,
             headers: {
                 'Content-Type' : 'multipar/form-data'
