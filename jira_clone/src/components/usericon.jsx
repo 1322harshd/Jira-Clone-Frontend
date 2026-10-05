@@ -15,7 +15,7 @@ if(authLoading || !currentUser){
 }
 
 const userName = currentUser.name || "Account";
-const imageLink = currentUser.image ? `http://localhost:3002/${currentUser.image}` : null;
+const imageLink = currentUser.image ? `${currentUser.image}` : null;
 
 const handleClick =  async () => {
 try{
