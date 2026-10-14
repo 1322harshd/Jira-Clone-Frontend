@@ -34,6 +34,8 @@ jobs:
       permissions:
         id-token: write
         contents: read
+      env:
+        TF_VAR_backend_domain: ${{ secrets.BACKEND_DOMAIN }}
       steps:
         - name: Checkout Code
           uses: actions/checkout@v4
@@ -52,15 +54,15 @@ jobs:
         - name: Create or update infrastructure
           working-directory: infra
           run: |
-              terraform init
-              terraform apply -auto-approve
+              terraform init -input=false
+              terraform apply -auto-approve -input=false
         
         - name: Read Terraform outputs
           id: tf
           working-directory: infra
           run: |
             echo "bucket=$(terraform output -raw bucket_name)" >> "$GITHUB_OUTPUT"
-            echo "dist=$(terraform output -raw distribution_id)" >> "$GITHUB_OUtPUT"
+            echo "dist=$(terraform output -raw distribution_id)" >> "$GITHUB_OUTPUT"
             echo "Site URL: $(terraform output -raw site_url)"
         
         - name: Setup Node.js
@@ -68,10 +70,10 @@ jobs:
           with:
             node-version: '22'
             cache: 'npm'
-            cache-dependency-path: jira-clone/package-lock.json
+            cache-dependency-path: jira_clone/package-lock.json
 
         - name: Build
-          working-directory: jira-clone
+          working-directory: jira_clone
           run: |
             npm ci
             npm run build

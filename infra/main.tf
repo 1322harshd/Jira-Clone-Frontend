@@ -122,7 +122,7 @@ default_cache_behavior {
         origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer_except_host.id
 
         function_association {
-            event_type = "viewer_request"
+            event_type = "viewer-request"
             function_arn = aws_cloudfront_function.strip_api.arn
         }
     }
@@ -149,7 +149,7 @@ resource "aws_s3_bucket_policy" "site" {
         Action = "s3:GetObject"
         Resource = "${aws_s3_bucket.site.arn}/*"
         Condition = {
-            StringEquals = { "AWS: SourceArn" = aws_cloudfront_distribution.site.arn }
+            StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.site.arn }
         }
     }]
   })
