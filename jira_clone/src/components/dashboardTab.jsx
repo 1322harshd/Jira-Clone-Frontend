@@ -101,7 +101,7 @@ export default function DashboardTab(){
         return <main className="dashboard-home"><p className="dashboard-state dashboard-state-error">{error}</p></main>;
     }
 
-    const userImage = dashboardData.user?.image ? `http://localhost:3002/${dashboardData.user.image}` : null;
+    const userImage = dashboardData.user?.image ? `${dashboardData.user.image}` : null;
 
     return(
         <main className="dashboard-home">
